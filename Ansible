@@ -1,28 +1,38 @@
-devasc › Test-Deepen_Tamang > * rest.py > ® report_ospf_operational_data import requests import json
+#devasc › Test-Deepen_Tamang > * rest.py > ® report_ospf_operational_data 
+
+import requests 
+import json
+
 # Disables the InsecureRequestWarning message
 requests packages.urllib3. disable warnings()
-def report_ospf
-_operational_data (router):
-url_ospf
-_operational_data = *https://* + router +*:443/restconf/data/Cisco-IOS-XE-ospf-opertospf-oper-data*
+def report_ospf_operational_data (router):
+  url_ospf_operational_data = *https://* + router +':443/restconf/data/Cisco-IOS-XE-ospf-opertospf-oper-data'
+
 #Construct an empty dictionary called payload
-payload = (}
+payload = {}
+
 #Construct a headers dictionary that specifies the content type expected to be #yang-data and json
-headers = {
-'Content-Type': 'application/yang-data+json.
-'Accept': 'application/yang-data+json'
-'Authorization': 'Basic YWRtaW46YWRtaW4=*
-response_ospf
-operational data = requests. request ("GET". url ospf operational data, headers=headers, data-payload, verify=False)
-ospf_op data = response ospf operational data. ison
-print ("Dumping JSON:"+router)
-print(json.dumps(ospf op data, indent=4))
-ospf
-instance_list = ospf_op data[ 'Cisco-IOS-XE-ospf-oper:ospf-oper-data JIlospf-state J/ospf-instance j
-print ("***router:"+router+* *******) for instance in ospf instance list: for area in instance ['ospf-area]: for interface in areal'ospf-interface"]:
-name = interface [' name*]
-if 'ospf-neighbor' in interface. keys):
-neighbor list = interfacel ospf-neighbor j
+  headers = {
+      'Content-Type': 'application/yang-data+json',
+      'Accept': 'application/yang-data+json',
+      'Authorization': 'Basic YWRtaW46YWRtaW4='
+
+  response_ospf_operational data = requests. request ("GET". url ospf operational data, headers=headers, data-payload, verify=False)
+  ospf_op data = response ospf operational data. json()
+
+  print ("Dumping JSON:"+router)
+  print(json.dumps(ospf op data, indent=4))
+
+  ospf_instance_list = ospf_op_data['Cisco-IOS-XE-ospf-oper:ospf-oper-data][ospf-state J/ospf-instance]
+  print ("***router:"+router+* ******") 
+
+  for instance in ospf instance list: 
+    for area in instance ['ospf-area]: 
+      for interface in areal'ospf-interface"]:
+        name = interface ['name']
+
+        if 'ospf-neighbor' in interface. keys():
+          neighbor list = interfacel ['ospf-neighbor']
 for neighbor in neighbor list
 print("*" + name - * neighbor" - neighbor| neighbor-id*1)
 else:
@@ -30,5 +40,4 @@ print("*" + name +* does not have an OSPF neighborshipti
 print("*********************35)
 routers = [ "10.0.0.1" *10.0.0.2* 10.0.0,31
 for router in routers:
-report_ospf_operational data ( router
-I
+    report_ospf_operational data ( router)
